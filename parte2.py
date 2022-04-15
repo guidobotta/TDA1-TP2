@@ -35,7 +35,7 @@ def find_negative_cycle(initial, graph):
                     if weight + costs[node] < costs[neighbour]:
                         modified = True
                         costs[neighbour] = weight + costs[node]
-                        predecessor[neighbour] = node
+                        predecessor[neighbour] = [node, weight]
                         if n == len(graph) - 1:
                             cycle_target = neighbour
                             break
@@ -47,8 +47,8 @@ def find_negative_cycle(initial, graph):
     # al menos una instancia del ciclo negativo
     path = []
     for i in range(len(graph) + 1):
-        cycle_target = predecessor[cycle_target]
-        path.append(predecessor[cycle_target])
+        cycle_target = predecessor[cycle_target][0]
+        path.append(predecessor[cycle_target][0])
     path.reverse()
     #print(path)
 
@@ -57,13 +57,11 @@ def find_negative_cycle(initial, graph):
     for i in range(len(path) + 1):
         i = i % len(path)
         if path[i] in found:
-            negative_cycle = path[found[path[i]]:i+1]
+            negative_cycle = path[found[path[i]]:i]
             total_cost = 0
-            for j in range(len(negative_cycle) - 1):
-                for edge in graph[negative_cycle[j]]:
-                    if edge[0] == negative_cycle[j+1]:
-                        total_cost += edge[1]
-                        break
+            for i in range(len(negative_cycle)-1,-1,-1):
+                total_cost += predecessor[negative_cycle[i]][1]
+
             return negative_cycle, total_cost
         else:
             found[path[i]] = i
