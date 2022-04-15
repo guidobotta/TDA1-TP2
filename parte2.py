@@ -1,11 +1,11 @@
 from math import inf
+import sys
 
-def read_file():
-    # TODO Cambiar grafo.txt
+def read_file(file):
     graph = dict()
     initial = ''
     
-    with open("grafo.txt") as file:
+    with open(file) as file:
         initial = file.readline().strip()
         for line in file:
             node1, node2, weight = line.strip().split(',')
@@ -24,6 +24,7 @@ def find_negative_cycle(initial, graph):
         costs[node] = inf
 
     costs[initial] = 0
+    cycle_target = ''
 
     # Hacemos iteracion extra para encontrar ciclo negativo
     for n in range(len(graph)):
@@ -35,15 +36,46 @@ def find_negative_cycle(initial, graph):
                         modified = True
                         costs[neighbour] = weight + costs[node]
                         predecessor[neighbour] = node
+                        if n == len(graph) - 1:
+                            cycle_target = neighbour
+                            break
 
         if not modified:
             return [], 0
 
-    # TODO CAMBIAR RETURN
-    return costs, 0
+    # Tomamos un camino de largo n, donde debe encontrarse
+    # al menos una instancia del ciclo negativo
+    path = []
+    for i in range(len(graph) + 1):
+        cycle_target = predecessor[cycle_target]
+        path.append(predecessor[cycle_target])
+    path.reverse()
+    #print(path)
+
+    # Filtramos el ciclo negativo y calculamos su costo
+    found = dict()
+    for i in range(len(path) + 1):
+        i = i % len(path)
+        if path[i] in found:
+            negative_cycle = path[found[path[i]]:i+1]
+            total_cost = 0
+            for j in range(len(negative_cycle) - 1):
+                for edge in graph[negative_cycle[j]]:
+                    if edge[0] == negative_cycle[j+1]:
+                        total_cost += edge[1]
+                        break
+            return negative_cycle, total_cost
+        else:
+            found[path[i]] = i
+
+    raise Exception("Unreachable section has been reached")
 
 def main():
-    initial, graph = read_file()
+    if len(sys.argv) < 2:
+        print("Error: faltan parámetros.")
+        print("Uso: solucion.py <ruta_archivo>")
+        return
+    initial, graph = read_file(sys.argv[1])
     cycle, cost = find_negative_cycle(initial, graph)
     if not cycle:
         print("No existen ciclos negativos en el grafo")
