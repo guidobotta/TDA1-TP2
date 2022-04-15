@@ -71,3 +71,13 @@ Nada
 **sin_ciclos_negativos3**
 
 Nada
+
+**multiples_ciclos_negativos**
+
+Nodos del ciclo 1: [C, D]
+
+Costo: -2
+
+Nodos del ciclo 2: [E, F]
+
+Costo: -1
