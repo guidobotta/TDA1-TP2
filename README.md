@@ -48,6 +48,12 @@ Nodos del ciclo: [C, D, F, G]
 
 Costo: -2
 
+**con_ciclo_negativo4**
+
+Nodos del ciclo: [F, D, B, E] 
+
+Costo: -3
+
 **gran_ciclo_negativo**
 
 Nodos del ciclo: [D, E, A, B, C] 
@@ -55,5 +61,13 @@ Nodos del ciclo: [D, E, A, B, C]
 Costo: -1
 
 **sin_ciclos_negativos**
+
+Nada
+
+**sin_ciclos_negativos2**
+
+Nada
+
+**sin_ciclos_negativos3**
 
 Nada
