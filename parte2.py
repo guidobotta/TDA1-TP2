@@ -13,6 +13,9 @@ def read_file(file):
                 graph[node1].append((node2, int(weight)))
             else:
                 graph[node1] = [(node2, int(weight))]
+            
+            if node2 not in graph:
+                graph[node2] = []
 
     return initial, graph
 
