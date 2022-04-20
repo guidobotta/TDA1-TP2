@@ -19,16 +19,7 @@ def read_file(file):
 
     return initial, graph
 
-def find_negative_cycle(initial, graph):
-    costs = dict()
-    predecessor = dict()
-
-    for node in graph:
-        costs[node] = inf
-
-    costs[initial] = 0
-    cycle_target = ''
-
+def find_negative_cycle_node(costs, graph, predecessor):
     # Hacemos iteracion extra para encontrar ciclo negativo
     for n in range(len(graph)):
         modified = False
@@ -40,36 +31,45 @@ def find_negative_cycle(initial, graph):
                         costs[neighbour] = weight + costs[node]
                         predecessor[neighbour] = [node, weight]
                         if n == len(graph) - 1:
-                            cycle_target = neighbour
-                            break
+                            return neighbour
 
         if not modified:
-            return [], 0
+            return None
+    
+    raise Exception("Unreachable section has been reached")
+
+def find_negative_cycle(initial, graph):
+    costs = dict()
+    predecessor = dict()
+
+    for node in graph:
+        costs[node] = inf
+    costs[initial] = 0
+
+    cycle_target = find_negative_cycle_node(costs, graph, predecessor)
+    if not cycle_target:
+        return [], 0
 
     # Tomamos un camino de largo n, donde debe encontrarse
     # al menos una instancia del ciclo negativo
-    path = []
-    for i in range(len(graph) + 1):
-        cycle_target = predecessor[cycle_target][0]
-        path.append(predecessor[cycle_target][0])
-    path.reverse()
-    #print(path)
-
-    # Filtramos el ciclo negativo y calculamos su costo
+    negative_cycle = []
     found = dict()
-    for i in range(len(path) + 1):
-        i = i % len(path)
-        if path[i] in found:
-            negative_cycle = path[found[path[i]]:i]
-            total_cost = 0
-            for i in range(len(negative_cycle)-1,-1,-1):
-                total_cost += predecessor[negative_cycle[i]][1]
+    for i in range(len(graph) + 1):
+        negative_cycle.append(cycle_target)
 
-            return negative_cycle, total_cost
+        if cycle_target in found:
+            negative_cycle = negative_cycle[found[negative_cycle[i]]:i]
+            break
         else:
-            found[path[i]] = i
+            found[cycle_target] = i
 
-    raise Exception("Unreachable section has been reached")
+        cycle_target = predecessor[cycle_target][0]
+
+    total_cost = 0
+    for i in range(len(negative_cycle)):
+        total_cost += predecessor[negative_cycle[i]][1]
+
+    return negative_cycle[::-1], total_cost
 
 def main():
     if len(sys.argv) < 2:

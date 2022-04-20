@@ -10,6 +10,30 @@ Nodos del ciclo: [E, D, A]
 
 Costo: -1
 
+**completo_con_ciclo_negativo_1**
+
+Nodos del ciclo: [B, C, D]
+
+Costo: -3
+
+**completo_con_ciclo_negativo_2**
+
+Nodos del ciclo: [B, C, D] 
+
+Costo: -3
+
+Nodos del ciclo: [A, B, C, D] 
+
+Costo: -4
+
+**completo_sin_ciclo_negativo_1**
+
+Sin ciclo
+
+**completo_sin_ciclo_negativo_2**
+
+Sin ciclo
+
 **con_bucle_negativo1**
 
 Nodos del ciclo: [A, A] 
