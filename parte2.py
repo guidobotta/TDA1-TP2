@@ -26,7 +26,7 @@ def read_file(path):
 def find_negative_cycle_node(costs, graph, predecessor):
     """
     Recibe un diccionario para almacenar los costos, un diccionario que
-    representa el grafo y un diccionario para almacenar los precesores.
+    representa el grafo y un diccionario para almacenar los predecesores.
 
     Ejecuta el algoritmo de Bellman-Ford con una iteración extra para
     determinar si existe al menos un ciclo negativo en el grafo.
@@ -99,7 +99,7 @@ def main():
 
     initial, graph = read_file(sys.argv[1])
     cycle, cost = find_negative_cycle(initial, graph)
-    
+
     if not cycle:
         print("No existen ciclos negativos en el grafo")
     else:
