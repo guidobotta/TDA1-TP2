@@ -113,3 +113,7 @@ Costo: -2
 Nodos del ciclo 2: [E, F]
 
 Costo: -1
+
+**isla_negativa**
+
+Nada

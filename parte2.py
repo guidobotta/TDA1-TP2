@@ -34,7 +34,6 @@ def find_negative_cycle_node(costs, graph, predecessor):
     Devuelve el primer nodo encontrado que se modifica en caso de existir
     un ciclo negativo o None en caso que no exista ciclo negativo.
     """
-    # Hacemos iteracion extra para encontrar ciclo negativo
     for n in range(len(graph)):
         modified = False
         for node in graph:
