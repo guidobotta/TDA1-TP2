@@ -2,7 +2,15 @@
 
 https://docs.google.com/document/d/1L5YFJh4rSsyc56rMmYdFXI9yif9FxhQu5n4bznjL_x0/edit#
 
+# Uso
+
+```sh
+python3 parte2.py <ruta_archivo.txt>
+```
+
 # Casos de Prueba
+
+Se realizaron distintos casos de prueba. Para cada caso se incluyen los resultados esperados. Los nodos del ciclo puede que se impriman en otro orden al esperado. En caso de existir múltiples ciclos, uno de ellos debe coincidir con la salida.
 
 **catedra**
 
@@ -36,13 +44,13 @@ Sin ciclo
 
 **con_bucle_negativo1**
 
-Nodos del ciclo: [A, A] 
+Nodos del ciclo: [A]
 
 Costo: -1
 
 **con_bucle_negativo2**
 
-Nodos del ciclo: [C, C] 
+Nodos del ciclo: [C]
 
 Costo: -1
 

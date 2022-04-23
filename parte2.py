@@ -1,11 +1,15 @@
 from math import inf
 import sys
 
-def read_file(file):
+def read_file(path):
+    """
+    Recibe la ruta de un archivo y devuelve un diccionario de la forma
+    {nodo: [(vecino_1, peso_1), ..., (vecino_n, peso_n)]}
+    """
     graph = dict()
     initial = ''
     
-    with open(file) as file:
+    with open(path) as file:
         initial = file.readline().strip()
         for line in file:
             node1, node2, weight = line.strip().split(',')
@@ -20,6 +24,16 @@ def read_file(file):
     return initial, graph
 
 def find_negative_cycle_node(costs, graph, predecessor):
+    """
+    Recibe un diccionario para almacenar los costos, un diccionario que
+    representa el grafo y un diccionario para almacenar los precesores.
+
+    Ejecuta el algoritmo de Bellman-Ford con una iteración extra para
+    determinar si existe al menos un ciclo negativo en el grafo.
+
+    Devuelve el primer nodo encontrado que se modifica en caso de existir
+    un ciclo negativo o None en caso que no exista ciclo negativo.
+    """
     # Hacemos iteracion extra para encontrar ciclo negativo
     for n in range(len(graph)):
         modified = False
@@ -39,6 +53,13 @@ def find_negative_cycle_node(costs, graph, predecessor):
     raise Exception("Unreachable section has been reached")
 
 def find_negative_cycle(initial, graph):
+    """
+    Recibe el nodo inicial y un grafo representado con un diccionario.
+    
+    En caso de existir ciclo negativo, devuelve una lista con los nodos
+    pertenecientes a dicho ciclo y el costo del ciclo. En caso contrario,
+    devuelve una lista vacía y un costo de 0.
+    """
     costs = dict()
     predecessor = dict()
 
@@ -76,8 +97,10 @@ def main():
         print("Error: faltan parámetros.")
         print("Uso: solucion.py <ruta_archivo>")
         return
+
     initial, graph = read_file(sys.argv[1])
     cycle, cost = find_negative_cycle(initial, graph)
+    
     if not cycle:
         print("No existen ciclos negativos en el grafo")
     else:
