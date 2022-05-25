@@ -73,14 +73,10 @@ def find_negative_cycle(initial, graph):
 
     # Tomamos un camino de largo n, donde debe encontrarse
     # al menos una instancia del ciclo negativo
-    found = dict()
+    found = set()
 
-    for i in range(len(graph) + 1):
-        if cycle_target in found:
-            break
-        else:
-            found[cycle_target] = True
-        
+    while cycle_target not in found:
+        found.add(cycle_target)
         cycle_target = predecessor[cycle_target][0]
 
     total_cost = predecessor[cycle_target][1]
