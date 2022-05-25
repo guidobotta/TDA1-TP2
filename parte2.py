@@ -1,4 +1,5 @@
 from math import inf
+from operator import truediv
 import sys
 
 def read_file(path):
@@ -72,22 +73,23 @@ def find_negative_cycle(initial, graph):
 
     # Tomamos un camino de largo n, donde debe encontrarse
     # al menos una instancia del ciclo negativo
-    negative_cycle = []
     found = dict()
-    for i in range(len(graph) + 1):
-        negative_cycle.append(cycle_target)
 
+    for i in range(len(graph) + 1):
         if cycle_target in found:
-            negative_cycle = negative_cycle[found[negative_cycle[i]]:i]
             break
         else:
-            found[cycle_target] = i
-
+            found[cycle_target] = True
+        
         cycle_target = predecessor[cycle_target][0]
 
-    total_cost = 0
-    for i in range(len(negative_cycle)):
-        total_cost += predecessor[negative_cycle[i]][1]
+    total_cost = predecessor[cycle_target][1]
+    negative_cycle = [cycle_target]
+    actual = predecessor[cycle_target][0]
+    while actual != cycle_target:
+        negative_cycle.append(actual)
+        total_cost += predecessor[actual][1]
+        actual = predecessor[actual][0]
 
     return negative_cycle[::-1], total_cost
 
